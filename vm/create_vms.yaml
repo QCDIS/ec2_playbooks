@@ -1,0 +1,37 @@
+- hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:  
+  
+  
+  
+    - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
+      with_items:
+        - { name: selected_flavors, value: "{{ selected_flavors }}" }
+        - { name: ssh_keys, value: "{{ ssh_keys }}" }
+        - { name: networks, value: "{{ networks }}" }
+        - { name: instances, value: "{{ hostvars['localhost']['instances'] }}" }
+        - { name: images, value: "{{ images }}" }
+        
+        
+
+    - shell: jq -s '.[0] * .[1]' /tmp/selected_flavors.json /tmp/ssh_keys.json > /tmp/flavors_ssh_keys.json
+    - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/flavors_ssh_keys.json > /tmp/networks_flavors_ssh_keys.json
+    - shell: jq -s '.[0] * .[1]' /tmp/instances.json /tmp/networks_flavors_ssh_keys.json > /tmp/networks_flavors_ssh_keys_instances.json
+    - shell: jq -s '.[0] * .[1]' /tmp/images.json /tmp/networks_flavors_ssh_keys_instances.json > /tmp/vms.json
+    
+  
+    - include_vars:
+        file: /tmp/vms.json
+        name: vms
+        
+        
+    - include_tasks: vm.yaml
+      vars: 
+        ssh_key_name: "{{ item.value['user_key_pair']['keys']['name'] }}"
+        security_group_name: "{{item.value['security_group_name']}}"
+        flavor: "{{item.value['flavor_name']}}"
+        image_id: "{{item.value['image_id']}}"
+        subnet_id: "{{item.value['subnet_id']}}"
+      loop: "{{ vms | dict2items }}"
