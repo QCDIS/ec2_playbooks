@@ -1,6 +1,6 @@
 
 - amazon.aws.ec2:
-    key_name: "{{ssh_key_name}""
+    key_name: "{{ssh_key_name}"
     group: "{{security_group_name}}"
     instance_type: "{{flavor}}"
     image: "{{image_id}}"
