@@ -1,0 +1,76 @@
+- hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    
+    - set_fact:
+        random_name: "sdia_{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"
+
+- ec2_group:
+    name: "{{random_name}}"
+    description: sdia generated 
+    vpc_id: "{{vpc}}"
+    region: "{{region_name}}"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 10.0.0.0/8
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        # this should only be needed for EC2 Classic security group rules
+        # because in a VPC an ELB will use a user-account security group
+        group_id: amazon-elb/sg-87654321/amazon-elb-sg
+      - proto: tcp
+        from_port: 3306
+        to_port: 3306
+        group_id: 123412341234/sg-87654321/exact-name-of-sg
+      - proto: udp
+        from_port: 10050
+        to_port: 10050
+        cidr_ip: 10.0.0.0/8
+      - proto: udp
+        from_port: 10051
+        to_port: 10051
+        group_id: sg-12345678
+      - proto: icmp
+        from_port: 8 # icmp type, -1 = any type
+        to_port:  -1 # icmp subtype, -1 = any subtype
+        cidr_ip: 10.0.0.0/8
+      - proto: all
+        # the containing group name may be specified here
+        group_name: example
+      - proto: all
+        # in the 'proto' attribute, if you specify -1, all, or a protocol number other than tcp, udp, icmp, or 58 (ICMPv6),
+        # traffic on all ports is allowed, regardless of any ports you specify
+        from_port: 10050 # this value is ignored
+        to_port: 10050 # this value is ignored
+        cidr_ip: 10.0.0.0/8
+      
+      
+    - local_action: copy content={{ group_output }} dest=/tmp/group_output.json
+        
+ 
+    - include_tasks: security_group.yaml
+      vars:
+        instance_name: "{{ item.key }}"
+      loop: "{{ instances | dict2items }}"
+      
+    - shell: jq '{"{{topology_name}}":{resource_group:.state.name}}' /tmp/resourcegroup_output.json > /tmp/resourcegroup_attribute.json
+    
+    - include_vars:
+        file: /tmp/resourcegroup_attribute.json
+        name: resourcegroup_attribute
+        
+    - set_stats:
+        data:
+          resource_group_name: "{{ random_name }}"
+          
+    - set_stats:
+        data: 
+          resourcegroup_attribute: "{{resourcegroup_attribute}}"
