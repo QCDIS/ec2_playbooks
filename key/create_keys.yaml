@@ -8,6 +8,7 @@
         
     - ec2_key:
         name: "{{random_name}}"
+        region: "{{region}}"
       register: key_output
       
     - local_action: copy content={{ key_output }} dest=/tmp/key_output.json
