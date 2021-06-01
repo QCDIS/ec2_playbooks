@@ -16,6 +16,10 @@
         region: "{{region}}"
         tenancy: dedicated
       register: ec2_vpc_output
+
+
+    - debug:
+        var: ec2_vpc_output
       
       
     - local_action: copy content={{ ec2_vpc_output }} dest=/tmp/ec2_vpc_output.json
