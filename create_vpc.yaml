@@ -3,11 +3,6 @@
       ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-  
-  
-    - set_fact:
-        random_name: "sdia_{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"
-        
     
     - ec2_vpc_net:
         name: "{{random_name}}"
@@ -17,11 +12,6 @@
         tenancy: dedicated
       register: ec2_vpc_output
 
-
-    - debug:
-        var: ec2_vpc_output
-      
-      
     - local_action: copy content={{ ec2_vpc_output }} dest=/tmp/ec2_vpc_output.json
 
 
@@ -29,3 +19,10 @@
       vars:
         instance_name: "{{ item.key }}"
       loop: "{{ instances | dict2items }}"
+
+    - shell: jq -r '.vpc.id' /tmp/ec2_vpc_output.json
+      register: vpc_id
+
+    - set_stats:
+        data:
+          vpc_id: "{{ vpc_id.stdout }}"
