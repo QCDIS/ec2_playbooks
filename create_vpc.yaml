@@ -9,10 +9,12 @@
         random_name: "sdia_{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"
         
     
-    - ec2_vpc:
+    - ec2_vpc_net:
+        name: "{{random_name}}"
         state: present
         cidr_block: 172.23.0.0/16
         region: "{{region}}"
+        tenancy: dedicated
       register: ec2_vpc_output
       
       
