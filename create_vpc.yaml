@@ -13,7 +13,27 @@
         state: present
         cidr_block: 172.23.0.0/16
         region: "{{region}}"
-      register: ec2_vpc
+      register: ec2_vpc_output
       
       
-    - local_action: copy content={{ ec2_vpc }} dest=/tmp/ec2_vpc.json
+    - local_action: copy content={{ ec2_vpc_output }} dest=/tmp/ec2_vpc_output.json
+
+
+    - include_tasks: vpc.yaml
+      vars:
+        instance_name: "{{ item.key }}"
+      loop: "{{ instances | dict2items }}"
+
+#    - shell: jq '{"{{topology_name}}":{resource_group:.state.name}}' /tmp/ec2_vpc.json > /tmp/ec2_vpc_attribute.json
+#
+#    - include_vars:
+#        file: /tmp/ec2_vpc_attribute.json
+#        name: ec2_vpc_attribute
+#
+#    - set_stats:
+#        data:
+#          resource_group_name: "{{ random_name }}"
+#
+#    - set_stats:
+#        data:
+#          resourcegroup_attribute: "{{resourcegroup_attribute}}"
