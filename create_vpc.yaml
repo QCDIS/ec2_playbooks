@@ -13,3 +13,7 @@
         state: present
         cidr_block: 172.23.0.0/16
         region: "{{region}}"
+      register: ec2_vpc
+      
+      
+    - local_action: copy content={{ ec2_vpc }} dest=/tmp/ec2_vpc.json
