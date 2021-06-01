@@ -6,5 +6,8 @@
     - package:
         name:
         - jq
-        state: present
+        state: present1
 #      become: yes
+
+
+    - shell: ansible-galaxy collection install amazon.aws
