@@ -29,17 +29,3 @@
       vars:
         instance_name: "{{ item.key }}"
       loop: "{{ instances | dict2items }}"
-
-#    - shell: jq '{"{{topology_name}}":{resource_group:.state.name}}' /tmp/ec2_vpc.json > /tmp/ec2_vpc_attribute.json
-#
-#    - include_vars:
-#        file: /tmp/ec2_vpc_attribute.json
-#        name: ec2_vpc_attribute
-#
-#    - set_stats:
-#        data:
-#          resource_group_name: "{{ random_name }}"
-#
-#    - set_stats:
-#        data:
-#          resourcegroup_attribute: "{{resourcegroup_attribute}}"
