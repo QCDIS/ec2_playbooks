@@ -1,8 +1,9 @@
 - hosts: localhost
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+      ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-    - ec2_key:
+    
+    - ec2_vpc_net:
         name: "{{random_name}}"
         state: absent
