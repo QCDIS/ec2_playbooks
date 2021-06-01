@@ -5,4 +5,5 @@
   tasks:
     - ec2_key:
         name: "{{random_name}}"
+        region: "{{region}}"
         state: absent

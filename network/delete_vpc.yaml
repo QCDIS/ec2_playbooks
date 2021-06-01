@@ -7,3 +7,4 @@
     - ec2_vpc_net:
         name: "{{random_name}}"
         state: absent
+        region: "{{region}}"
