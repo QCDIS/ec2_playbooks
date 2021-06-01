@@ -6,7 +6,7 @@
     - package:
         name:
         - jq
-        state: present1
+        state: present
 #      become: yes
 
 
