@@ -20,6 +20,7 @@
 
 
 - ec2_ami_info:
+    region: "{{domain}}"
   register: image_info_output_2
 
 
