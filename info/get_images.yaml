@@ -1,11 +1,16 @@
 - hosts: localhost
   vars:
+    ansible_python_interpreter: /usr/bin/python3
+
   tasks:
-
-
     - include_tasks: get_image.yaml
       vars:
         os_distro: "{{ item.value.os_distro }}"
         os_version: "{{ item.value.os_version }}"
         location: "{{hostvars['localhost']['domain']}}"
       loop: "{{ hostvars['localhost']['instances'] | dict2items }}"
+
+
+
+
+

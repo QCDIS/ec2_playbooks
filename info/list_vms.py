@@ -20,7 +20,6 @@ def list_available_vm_sizes(compute_client, region = 'eu-west-1', minimum_cores 
 if __name__ == '__main__':
     client = boto3.client(
         'ec2','eu-west-1',
-
     )
     response = client.describe_instances()
 
