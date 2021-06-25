@@ -23,7 +23,7 @@
     region: "{{region}}"
     filters:
       state: "available"
-#      platform: "Linux/UNIX"
+      platform_details: "Linux/UNIX"
   register: image_info_output_2
 #  when: not stat_result.stat.exists
 
@@ -33,7 +33,7 @@
 
 
 
-#- shell: jq '.vmimages[] | select(.id|contains("{{publisher}}"))' /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
+#- shell: jq '.images[] | select(.image_location|contains("ubuntu"))' /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
 #  register: image_id
 #
 #- set_stats:
