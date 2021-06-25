@@ -21,15 +21,11 @@
         path: /tmp/flavor_info_output_{{region}}.json
       register: stat_result
 
-
-
-    - ec2_instance_info:
-        region: "{{region}}"
-      register: flavor_info_output
+    - shell: python "{{ playbook_dir }}"/list_vms.py "{{hostvars['localhost']['credentials'][0]['aws_access_key_id']}}" "{{hostvars['localhost']['credentials'][0]['aws_secret_access_key']}}" "{{region}}" > /tmp/flavor_info_output_{{region}}.json
       when: not stat_result.stat.exists
 
-    - local_action: copy content={{ flavor_info_output }} dest=/tmp/flavor_info_output_{{region}}.json
-      when: not stat_result.stat.exists
+    - shell: cat /tmp/flavor_info_output_{{region}}.json
+      register: flavors_output
 
     - shell: python "{{ playbook_dir }}"/select_best_flavor.py /tmp/flavor_info_output_{{region}}.json /tmp/request_instances.json > /tmp/selected_flavors_{{region}}.json
       register: select_best_flavors_output
@@ -41,6 +37,3 @@
     - set_stats:
         data: "{{selected_flavors}}"
       register: flavor_stats_output
-
-    - debug:
-        var: flavor_stats_output
