@@ -23,7 +23,8 @@
     region: "{{region}}"
     filters:
       state: "available"
-      platform_details: "Linux/UNIX"
+      platform: "Linux/UNIX"
+      manifest-location: "*ubunut*"
   register: image_info_output_2
 #  when: not stat_result.stat.exists
 
