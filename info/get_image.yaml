@@ -22,7 +22,8 @@
 - ec2_ami_info:
     region: "{{region}}"
     filters:
-      name: "ubuntu/images/*"
+      state: "available"
+      platform: "Linux/UNIX"
   register: image_info_output_2
 #  when: not stat_result.stat.exists
 
