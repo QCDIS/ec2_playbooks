@@ -37,6 +37,10 @@
     - shell: cat /tmp/flavor_info_output_{{region}}.json
       register: flavors_output
 
+
+    - debug:
+        vars: flavors_output.stdout
+
 #    - shell: python "{{ playbook_dir }}"/select_best_flavor.py /tmp/flavor_info_output_{{region}}.json /tmp/request_instances.json > /tmp/selected_flavors_{{region}}.json
 #      register: select_best_flavors_output
 
