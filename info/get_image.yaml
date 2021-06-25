@@ -23,7 +23,7 @@
     region: "{{region}}"
     filters:
       state: "available"
-      manifest-location: "*ubunut*"
+      architecture: "x86_64"
   register: image_info_output_2
 #  when: not stat_result.stat.exists
 
