@@ -13,24 +13,24 @@ def get_shorter_dist(available_instances, requested_instances):
         requested_instance = requested_instances[requested_instance_name]
         requested_vector = np.array([int(requested_instance['mem_size'].split(' ')[0]),
                                      int(requested_instance['num_cores'])])
-                                     # int(requested_instance['disk_size'].split(' ')[0])])
+        # int(requested_instance['disk_size'].split(' ')[0])])
 
         for flavor in flavors:
-            print(flavor)
-            if 'ProcessorInfo' in flavor and 'SupportedArchitectures' in flavor['ProcessorInfo'] and 'x86_64' in flavor['ProcessorInfo']['SupportedArchitectures']:
+            if 'ProcessorInfo' in flavor and 'SupportedArchitectures' in flavor['ProcessorInfo'] and 'x86_64' in \
+                    flavor['ProcessorInfo']['SupportedArchitectures']:
                 available_vector = np.array([int(flavor['MemoryInfo']['SizeInMiB']),
                                              int(flavor['VCpuInfo']['DefaultVCpus'])])
-                                             # int(requested_instance['disk_size'].split(' ')[0])])
+                # int(requested_instance['disk_size'].split(' ')[0])])
             elif 'memory_in_mb' in flavor and 'number_of_cores' in flavor:
                 available_vector = np.array([int(flavor['memory_in_mb']),
                                              int(flavor['number_of_cores'])])
-                                             # int(requested_instance['disk_size'].split(' ')[0])])
+                # int(requested_instance['disk_size'].split(' ')[0])])
             dist = norm(requested_vector - available_vector)
             if dist < min_dist:
                 min_dist = dist
                 if 'InstanceType' in flavor:
                     selected_flavor = {'flavor_name': flavor['InstanceType']}
-                elif 'name' in  flavor:
+                elif 'name' in flavor:
                     selected_flavor = {'flavor_name': flavor['name']}
                 selected_flavors[requested_instance_name] = selected_flavor
 
@@ -48,5 +48,5 @@ if __name__ == "__main__":
     requested_instances = json.load(f)
 
     selected_flavors = get_shorter_dist(available_instances, requested_instances)
-    instances = {'selected_flavors':selected_flavors}
+    instances = {'selected_flavors': selected_flavors}
     print(json.dumps(instances))

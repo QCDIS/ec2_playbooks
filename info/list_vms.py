@@ -2,14 +2,12 @@ import json
 import sys
 import boto3
 
-
-
 if __name__ == '__main__':
     aws_access_key_id = sys.argv[1]
     aws_secret_access_key = sys.argv[2]
     region = sys.argv[3]
     client = boto3.client(
-        'ec2',region,
+        'ec2', region,
         aws_access_key_id=aws_access_key_id,
         aws_secret_access_key=aws_secret_access_key
     )
@@ -20,4 +18,3 @@ if __name__ == '__main__':
         instance_types.append(type)
 
     print(json.dumps(instance_types))
-
