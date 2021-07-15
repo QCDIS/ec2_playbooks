@@ -14,5 +14,5 @@
     - pip:
         name:
           - boto3==1.17.84
-          - numpy==1.21.0
+          - numpy
     - shell: ansible-galaxy collection install amazon.aws
