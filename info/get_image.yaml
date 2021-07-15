@@ -1,6 +1,6 @@
 - find:
     paths: /tmp/
-    patterns: "image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json"
+    patterns: "ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json"
     age: 30d
   register: older_files
 
@@ -10,11 +10,11 @@
   with_items: "{{ older_files.files }}"
 
 - stat:
-    path: /tmp/image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
+    path: /tmp/ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
   register: stat_result
 
 - include_vars:
-    file: /tmp/image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
+    file: /tmp/ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
     name: image_info_output_cache
   when: stat_result.stat.exists
 
@@ -25,10 +25,10 @@
       state: "available"
       architecture: "x86_64"
   register: image_info_output_2
-#  when: not stat_result.stat.exists
+ when: not stat_result.stat.exists
 
-- local_action: copy content={{ image_info_output_2 }} dest=/tmp/image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
-#  when: not stat_result.stat.exists
+- local_action: copy content={{ image_info_output_2 }} dest=/tmp/ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
+ when: not stat_result.stat.exists
 
 
 
