@@ -33,13 +33,13 @@
 
 
 
-#- shell: jq '.images[] | select(.image_location|contains("ubuntu"))' /tmp/image_info_output_{{ location }}_{{os_distro}}_{{os_version}}.json
-#  register: image_id
-#
-#- set_stats:
-#   data:
-#     images: "{{ image_id.stdout }}"
-# register: get_images_output
+- shell: jq -r '[.images |sort_by(.creation_date) | reverse[] | select(.image_location|contains({{os_distro}) and contains(-{{os_version}})) | select(.owner_id=="099720109477")|select(.name|contains("ubuntu-eks")|not)][0].image_id' ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
+  register: image_id
+
+- set_stats:
+   data:
+     images: "{{ image_id.stdout }}"
+ register: get_images_output
 
 
 
