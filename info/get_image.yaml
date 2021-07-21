@@ -34,7 +34,7 @@
 
 
 #- shell: jq -r '[.images |sort_by(.creation_date) | reverse[] | select(.image_location|contains("{{os_distro}") and contains("{{os_version}}")) | select(.owner_id=="099720109477")|select(.name|contains("ubuntu-eks")|not)][0].image_id' ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
-- shell: jq -r '[.images |sort_by(.creation_date) | reverse[]][0].image_id' /tmp/ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
+- shell: jq -r '[.images |sort_by(.creation_date) | reverse[] | select(.image_location|contains("ubuntu") ][0].image_id' /tmp/ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
   register: image_id
 
 - set_stats:
