@@ -30,10 +30,7 @@
 - local_action: copy content={{ image_info_output_2 }} dest=/tmp/ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
   when: not stat_result.stat.exists
 
-- debug:
-    var: os_distro
 
-#- shell: jq -r '[.images |sort_by(.creation_date) | reverse[] | select(.image_location|contains("{{os_distro}") and contains("{{os_version}}")) | select(.owner_id=="099720109477")|select(.name|contains("ubuntu-eks")|not)][0].image_id' ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
 - shell: jq -r '[.images |sort_by(.creation_date) | reverse[] | select(.image_location|contains("{{os_distro}}") and contains("{{os_version}}")) | select(.owner_id=="099720109477") |select(.name|contains("ubuntu-eks")|not) ][0].image_id' /tmp/ec2_image_info_output_{{ region }}_{{os_distro}}_{{os_version}}.json
   register: image_id
 
