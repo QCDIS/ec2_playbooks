@@ -8,6 +8,7 @@
         state: present
         vpc_id: "{{vpc_id}}"
         cidr: 172.23.0.0/16
+        region: "{{region}}"
       register: subnet_output
 
     - local_action: copy content={{ subnet_output }} dest=/tmp/{{random_name}}_ec2_subnet_output.json
