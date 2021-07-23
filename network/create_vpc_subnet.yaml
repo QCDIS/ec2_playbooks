@@ -1,0 +1,26 @@
+- hosts: localhost
+  vars:
+      ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    
+     - ec2_vpc_subnet:
+        state: present
+        vpc_id: "{{vpc_id}}"
+        cidr: 172.23.0.0/16
+      register: subnet_output
+
+    - local_action: copy content={{ subnet_output }} dest=/tmp/ec2_subnet_output.json
+
+
+    - include_tasks: vpc.yaml
+      vars:
+        instance_name: "{{ item.key }}"
+      loop: "{{ instances | dict2items }}"
+
+    - shell: jq -r '.vpc.id' /tmp/ec2_vpc_output.json
+      register: vpc_id
+
+    - set_stats:
+        data:
+          vpc_id: "{{ vpc_id.stdout }}"
