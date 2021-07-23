@@ -4,7 +4,7 @@
 
   tasks:
     
-     - ec2_vpc_subnet:
+    - ec2_vpc_subnet:
         state: present
         vpc_id: "{{vpc_id}}"
         cidr: 172.23.0.0/16
