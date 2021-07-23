@@ -8,11 +8,11 @@
   
     - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
       with_items:
-        - { name: {{random_name}}_ec2_selected_flavors, value: "{{ selected_flavors }}" }
-        - { name: {{random_name}}_ec2_ssh_keys, value: "{{ ssh_keys }}" }
-        - { name: {{random_name}}_ec2_networks, value: "{{ networks }}" }
-        - { name: {{random_name}}_ec2_instances, value: "{{ hostvars['localhost']['instances'] }}" }
-        - { name: {{random_name}}_ec2_images, value: "{{ images }}" }
+        - { name: "{{random_name}}"_ec2_selected_flavors, value: "{{ selected_flavors }}" }
+        - { name: "{{random_name}}"_ec2_ssh_keys, value: "{{ ssh_keys }}" }
+        - { name: "{{random_name}}"_ec2_networks, value: "{{ networks }}" }
+        - { name: "{{random_name}}"_ec2_instances, value: "{{ hostvars['localhost']['instances'] }}" }
+        - { name: "{{random_name}}"_ec2_images, value: "{{ images }}" }
         
         
 
