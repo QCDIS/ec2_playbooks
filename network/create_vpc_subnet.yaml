@@ -13,14 +13,14 @@
     - local_action: copy content={{ subnet_output }} dest=/tmp/ec2_subnet_output.json
 
 
-    - include_tasks: vpc.yaml
+    - include_tasks: vpc_subnet.yaml
       vars:
         instance_name: "{{ item.key }}"
       loop: "{{ instances | dict2items }}"
 
-    - shell: jq -r '.vpc.id' /tmp/ec2_vpc_output.json
-      register: vpc_id
+    - shell: jq -r '.vpc.id' /tmp/ec2_subnet_output.json
+      register: ec2_subnet_id
 
     - set_stats:
         data:
-          vpc_id: "{{ vpc_id.stdout }}"
+          vpc_id: "{{ ec2_subnet_id.stdout }}"
