@@ -8,22 +8,22 @@
   
     - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
       with_items:
-        - { name: selected_flavors, value: "{{ selected_flavors }}" }
-        - { name: ssh_keys, value: "{{ ssh_keys }}" }
-        - { name: networks, value: "{{ networks }}" }
-        - { name: instances, value: "{{ hostvars['localhost']['instances'] }}" }
-        - { name: images, value: "{{ images }}" }
+        - { name: {{random_name}}_ec2_selected_flavors, value: "{{ selected_flavors }}" }
+        - { name: {{random_name}}_ec2_ssh_keys, value: "{{ ssh_keys }}" }
+        - { name: {{random_name}}_ec2_networks, value: "{{ networks }}" }
+        - { name: {{random_name}}_ec2_instances, value: "{{ hostvars['localhost']['instances'] }}" }
+        - { name: {{random_name}}_ec2_images, value: "{{ images }}" }
         
         
 
-    - shell: jq -s '.[0] * .[1]' /tmp/selected_flavors.json /tmp/ssh_keys.json > /tmp/flavors_ssh_keys.json
-    - shell: jq -s '.[0] * .[1]' /tmp/networks.json /tmp/flavors_ssh_keys.json > /tmp/networks_flavors_ssh_keys.json
-    - shell: jq -s '.[0] * .[1]' /tmp/instances.json /tmp/networks_flavors_ssh_keys.json > /tmp/networks_flavors_ssh_keys_instances.json
-    - shell: jq -s '.[0] * .[1]' /tmp/images.json /tmp/networks_flavors_ssh_keys_instances.json > /tmp/vms.json
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_selected_flavors.json /tmp/ssh_keys.json > /tmp/{{random_name}}_ec2_flavors_ssh_keys.json
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_networks.json /tmp/{{random_name}}_ec2_flavors_ssh_keys.json > /tmp/{{random_name}}_ec2_networks_flavors_ssh_keys.json
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_instances.json /tmp/{{random_name}}_ec2_networks_flavors_ssh_keys.json > /tmp/{{random_name}}_ec2_networks_flavors_ssh_keys_instances.json
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_images.json /tmp/{{random_name}_ec2}_networks_flavors_ssh_keys_instances.json > /tmp/{{random_name}}_ec2_vms.json
     
   
     - include_vars:
-        file: /tmp/vms.json
+        file: /tmp/{{random_name}}_ec2_vms.json
         name: vms
         
         
