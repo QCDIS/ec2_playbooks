@@ -19,7 +19,7 @@
 #         instance_name: "{{ item.key }}"
 #       loop: "{{ instances | dict2items }}"
 
-    - shell: jq -r '.vpc.id' /tmp/{{random_name}}_ec2_subnet_output.json
+    - shell: jq -r '.subnet.id' /tmp/{{random_name}}_ec2_subnet_output.json
       register: ec2_subnet_id
 
     - set_stats:
