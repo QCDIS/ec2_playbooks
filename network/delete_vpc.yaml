@@ -5,7 +5,7 @@
   tasks:
     
     - ec2_vpc_net:
-        name: "{{random_name}}"
+        name: "{{region}}"
         state: absent
         cidr_block: 172.23.0.0/16
         region: "{{region}}"
