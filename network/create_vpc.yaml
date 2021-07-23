@@ -15,10 +15,10 @@
     - local_action: copy content={{ ec2_vpc_output }} dest=/tmp/ec2_vpc_output.json
 
 
-    - include_tasks: vpc.yaml
-      vars:
-        instance_name: "{{ item.key }}"
-      loop: "{{ instances | dict2items }}"
+#     - include_tasks: vpc.yaml
+#       vars:
+#         instance_name: "{{ item.key }}"
+#       loop: "{{ instances | dict2items }}"
 
     - shell: jq -r '.vpc.id' /tmp/ec2_vpc_output.json
       register: vpc_id
