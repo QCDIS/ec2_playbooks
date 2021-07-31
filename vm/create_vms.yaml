@@ -23,7 +23,7 @@
         name: vms
         
     - debug:
-        var: item
+        var: item.value['user_key_pair']
       loop: "{{ vms | dict2items }}"
         
     - include_tasks: vm.yaml
