@@ -1,3 +1,5 @@
+- debug: 
+    var: ssh_key_name
 
 - ec2:
     key_name: "{{ssh_key_name}}"
