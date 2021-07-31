@@ -22,8 +22,9 @@
         file: /tmp/{{random_name}}_ec2_vms.json
         name: vms
         
-#     - debug:
-#         var: vms
+    - debug:
+        var: item
+      loop: "{{ vms | dict2items }}"
         
     - include_tasks: vm.yaml
       vars: 
