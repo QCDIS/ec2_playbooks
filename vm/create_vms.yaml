@@ -22,14 +22,14 @@
         file: /tmp/{{random_name}}_ec2_vms.json
         name: vms
         
-    - debug:
-        var: vms
+#     - debug:
+#         var: vms
         
-#     - include_tasks: vm.yaml
-#       vars: 
-#         ssh_key_name: "{{ item.value['user_key_pair']['keys']['name'] }}"
-#         security_group_name: "{{item.value['security_group_name']}}"
-#         flavor: "{{item.value['flavor_name']}}"
-#         image_id: "{{item.value['image_id']}}"
-#         subnet_id: "{{item.value['subnet_id']}}"
-#       loop: "{{ vms | dict2items }}"
+    - include_tasks: vm.yaml
+      vars: 
+        ssh_key_name: "{{ item.value['user_key_pair']['keys']['name'] }}"
+        security_group_name: "{{item.value['security_group_name']}}"
+        flavor: "{{item.value['flavor_name']}}"
+        image_id: "{{item.value['image_id']}}"
+        subnet_id: "{{item.value['subnet_id']}}"
+      loop: "{{ vms | dict2items }}"
