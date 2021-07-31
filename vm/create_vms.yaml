@@ -15,8 +15,8 @@
         
 
     - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_selected_flavors.json /tmp/{{random_name}}_ec2_ssh_keys.json > /tmp/{{random_name}}_ec2_flavors_ssh_keys.json
-    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_flavors_ssh_keys.json /tmp/{{random_name}}_ec2_instances > /tmp/{{random_name}}_ec2_flavors_ssh_keys_instances.json
-    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_flavors_ssh_keys_instances.json /tmp/{{random_name}}_ec2_images > /tmp/{{random_name}}_ec2_vms.json
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_flavors_ssh_keys.json /tmp/{{random_name}}_ec2_instances.json > /tmp/{{random_name}}_ec2_flavors_ssh_keys_instances.json
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_flavors_ssh_keys_instances.json /tmp/{{random_name}}_ec2_images.json > /tmp/{{random_name}}_ec2_vms.json
       
     - include_vars:
         file: /tmp/{{random_name}}_ec2_vms.json
