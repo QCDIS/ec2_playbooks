@@ -1,5 +1,5 @@
 
-- amazon.aws.ec2:
+- ec2:
     key_name: "{{ssh_key_name}}"
     group: "{{security_group_name}}"
     instance_type: "{{flavor}}"
@@ -16,7 +16,7 @@
   when: volume_path is defined
   
   
-- amazon.aws.ec2:
+- ec2:
     key_name: "{{ssh_key_name}}"
     group: "{{security_group_name}}"
     instance_type: "{{flavor}}"
