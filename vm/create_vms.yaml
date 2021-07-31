@@ -24,7 +24,7 @@
         
         
     - debug: 
-        var: item.value['user_key_pair']
+        var: item
       loop: "{{ vms | dict2items }}"
       
         
