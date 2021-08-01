@@ -1,5 +1,5 @@
 
-- shell: jq -r '. | {"{{ item.key }}":{vpc_id:.vpc.id}}' /tmp/ec2_vpc_output.json
+- shell: jq -r '. | {"{{ item.key }}":{vpc_id:.vpc.id}}' /tmp/{{random_name}}_ec2_vpc_output.json
   register: ec2_vpc
 
 
