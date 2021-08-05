@@ -5,4 +5,4 @@
 
 - set_stats:
     data:
-      vpc_id: "{{ ec2_subnet_id.stdout }}"
+      subnet_id: "{{ ec2_subnet_id.stdout }}"
