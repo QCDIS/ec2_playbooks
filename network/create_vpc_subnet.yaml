@@ -10,6 +10,8 @@
         cidr: 172.23.0.0/16
         region: "{{region}}"
         wait: yes
+        tags:
+          Name: "{{random_name}}"
       register: subnet_output
 
     - local_action: copy content={{ subnet_output }} dest=/tmp/{{random_name}}_ec2_subnet_output.json
