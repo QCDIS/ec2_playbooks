@@ -34,5 +34,5 @@
         security_group_name: "{{item.value['security_group_name']}}"
         flavor: "{{item.value['flavor_name']}}"
         image_id: "{{item.value['image_id']}}"
-        subnet_id: "{{item.value['subnet_id']}}"
+        subnet_id: "{{subnet_id}}"
       loop: "{{ vms | dict2items }}"
