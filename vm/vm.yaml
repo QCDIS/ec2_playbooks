@@ -6,6 +6,7 @@
     group: "{{security_group_name}}"
     instance_type: "{{flavor}}"
     image: "{{image_id}}"
+    region: "{{region}}"
     wait: no
     volumes:
       - device_name: "{{volume_path}"
@@ -23,6 +24,7 @@
     group: "{{security_group_name}}"
     instance_type: "{{flavor}}"
     image: "{{image_id}}"
+    region: "{{region}}"
     wait: no
     monitoring: yes
     vpc_subnet_id: "{{subnet_id}}"
