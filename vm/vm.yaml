@@ -32,11 +32,11 @@
     vpc_subnet_id: "{{subnet_id}}"
     assign_public_ip: yes
   register: ec2_output
-#   when: volume_path is not defined
-#   until: ec2_output.rc == 0
-#   retries: 10
-#   delay: 1
-#   ignore_errors: yes
+  when: volume_path is not defined
+  until: ec2_output.rc == 0
+  retries: 10
+  delay: 1
+  ignore_errors: yes
   
 - debug:
     var: ec2_output
