@@ -28,7 +28,7 @@
           subnet_id: "{{ ec2_subnet_id.stdout }}"
           
           
-    - ec2_vpc_subnet_facts:
+    - ec2_vpc_subnet_info:
         region: "{{ region }}"
         filters:
           vpc-id: "{{vpc_id}}"
@@ -36,7 +36,7 @@
       register: ec2_vpc_subnet_facts_out
         
     - debug:
-        var: ec2_vpc_subnet_facts
+        var: ec2_vpc_subnet_facts_out
       
 
 #     - include_tasks: vpc_subnet.yaml
