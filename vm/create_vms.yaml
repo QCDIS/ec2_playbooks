@@ -35,4 +35,5 @@
         flavor: "{{item.value['flavor_name']}}"
         image_id: "{{item.value['image_id']}}"
         subnet_id: "{{subnet_id}}"
+        state: present
       loop: "{{ vms | dict2items }}"
