@@ -11,7 +11,7 @@
 #       when: ssh_keys is defined      
         
 
-    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_ssh_keys.json  /tmp/{{random_name}}_ec2_vm.json > /tmp/{{random_name}}_ec2_ssh_keys_vm.json  
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_ssh_keys.json  /tmp/{{random_name}}_ec2_vms.json > /tmp/{{random_name}}_ec2_attributes.json  
       when: ssh_keys is defined
 
 
