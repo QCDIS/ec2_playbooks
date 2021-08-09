@@ -31,7 +31,6 @@
     monitoring: yes
     vpc_subnet_id: "{{subnet_id}}"
     assign_public_ip: yes
-    tenancy: dedicated
   register: ec2_output
 #   when: volume_path is not defined
 #   until: ec2_output.rc == 0
