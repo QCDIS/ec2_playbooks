@@ -29,7 +29,7 @@
         region: "{{ region }}"
         filters:
           vpc-id: "{{vpc_id}}"
-          subnet-id: "{{ subnet_id }}"
+          subnet-id: "{{ ec2_subnet_id.stdout }}"
         register: ec2_vpc_subnet_facts_out
         
     - debug:
