@@ -31,8 +31,6 @@
     monitoring: yes
     vpc_subnet_id: "{{subnet_id}}"
     assign_public_ip: yes
-    aws_access_key: "{{hostvars['localhost']['credentials'][0]['aws_access_key_id']}}"
-    aws_secret_key: "{{hostvars['localhost']['credentials'][0]['aws_secret_access_key']}}"
   register: ec2_output
 #   when: volume_path is not defined
 #   until: ec2_output.rc == 0
