@@ -9,7 +9,6 @@
         state: present
         cidr_block: 172.23.0.0/16
         region: "{{region}}"
-        tenancy: dedicated
       register: ec2_vpc_output
 
     - local_action: copy content={{ ec2_vpc_output }} dest=/tmp/{{random_name}}_ec2_vpc_output.json
