@@ -6,8 +6,7 @@
   
     - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
       with_items:
-        
-        - { name: "{{random_name}}_ec2_vm", value: "{{ vm }}" }        
+        - { name: "{{random_name}}_ec2_vms.json", value: "{{ vm }}" }        
         - { name: "{{random_name}}_ec2_ssh_keys", value: "{{ ssh_keys }}" }        
       when: ssh_keys is defined      
         
