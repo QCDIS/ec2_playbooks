@@ -16,17 +16,18 @@ def get_shorter_dist(available_instances, requested_instances):
         # int(requested_instance['disk_size'].split(' ')[0])])
 
         for flavor in flavors:
-            available_vector = np.array([int(flavor['MemoryInfo']['SizeInMiB']),
-                                         int(flavor['VCpuInfo']['DefaultVCpus'])])
-                # int(requested_instance['disk_size'].split(' ')[0])])
-            dist = norm(requested_vector - available_vector)
-            if dist < min_dist:
-                min_dist = dist
-                if 'InstanceType' in flavor:
-                    selected_flavor = {'flavor_name': flavor['InstanceType']}
-                elif 'name' in flavor:
-                    selected_flavor = {'flavor_name': flavor['name']}
-                selected_flavors[requested_instance_name] = selected_flavor
+            if not flavor['BareMetal'] and 'ProcessorInfo' in flavor and 'x86_64' in flavor['ProcessorInfo']['SupportedArchitectures']:
+                available_vector = np.array([int(flavor['MemoryInfo']['SizeInMiB']),
+                                             int(flavor['VCpuInfo']['DefaultVCpus'])])
+                    # int(requested_instance['disk_size'].split(' ')[0])])
+                dist = norm(requested_vector - available_vector)
+                if dist < min_dist:
+                    min_dist = dist
+                    if 'InstanceType' in flavor:
+                        selected_flavor = {'flavor_name': flavor['InstanceType']}
+                    elif 'name' in flavor:
+                        selected_flavor = {'flavor_name': flavor['name']}
+                    selected_flavors[requested_instance_name] = selected_flavor
 
     return selected_flavors
 
