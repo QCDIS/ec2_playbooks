@@ -35,3 +35,12 @@
     var: ec2_output
     
     
+- local_action: copy content={{ ec2_output }} dest=/tmp/vm_output.json
+
+- shell:  jq '.instances[0] | {"{{ item.key }}":{public_ip:.public_ip,node_type:.instance_type,id:.id,public_dns_name:.public_dns_name}}' /tmp/vm_output.json
+  register: vm_provision_attributes
+  
+     
+- set_stats:
+    data:
+      vm: "{{ vm_provision_attributes.stdout }}"
