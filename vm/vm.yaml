@@ -42,12 +42,12 @@
 - debug:
     var: ec2_instance_info_output
     
-- local_action: copy content={{ ec2_output }} dest=/tmp/{{random_name}}_ec2_vm_output.json
+# - local_action: copy content={{ ec2_output }} dest=/tmp/{{random_name}}_ec2_vm_output.json
 
-- shell:  jq '.instances[0] | {"{{ item.key }}":{public_ip:.public_ip,node_type:.instance_type,id:.id,public_dns_name:.public_dns_name}}' /tmp/{{random_name}}_ec2_vm_output.json
-  register: vm_provision_attributes
+# - shell:  jq '.instances[0] | {"{{ item.key }}":{public_ip:.public_ip,node_type:.instance_type,id:.id,public_dns_name:.public_dns_name}}' /tmp/{{random_name}}_ec2_vm_output.json
+#   register: vm_provision_attributes
   
      
-- set_stats:
-    data:
-      vm: "{{ vm_provision_attributes.stdout }}"
+# - set_stats:
+#     data:
+#       vm: "{{ vm_provision_attributes.stdout }}"
