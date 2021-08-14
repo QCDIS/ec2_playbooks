@@ -1,0 +1,17 @@
+ - ec2:
+    key_name: "{{ssh_key_name}}"
+    group: "{{security_group_name}}"
+    instance_type: "{{flavor}}"
+    image: "{{image_id}}"
+    region: "{{region}}"
+    wait: yes
+    volumes:
+      - device_name: "{{volume_path}"
+        volume_type: "{{volume_type_name}}"
+        volume_size: "{{volume_size_num}}"
+        delete_on_termination: true
+    monitoring: no
+    vpc_subnet_id: "{{subnet_id}}"
+    assign_public_ip: yes
+  register: ec2_output
+  when: volume_path is defined
