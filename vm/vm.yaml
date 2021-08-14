@@ -31,21 +31,21 @@
   register: ec2_output
   when: volume_path is not defined
   
-# - debug:
-#     var: ec2_output
-    
-- ec2_instance_info:
-    instance_ids:
-      - "{{ec2_output['instance_ids'][0]}}"
-    region: "{{region}}"
-  register: ec2_instance_info_output
-  
 - debug:
-    var: ec2_instance_info_output
+    var: ec2_output
     
-- local_action: copy content={{ ec2_instance_info_output }} dest=/tmp/{{random_name}}ec2_instance_info_output.json
+# - ec2_instance_info:
+#     instance_ids:
+#       - "{{ec2_output['instance_ids'][0]}}"
+#     region: "{{region}}"
+#   register: ec2_instance_info_output
+  
+# - debug:
+#     var: ec2_instance_info_output
+    
+- local_action: copy content={{ ec2_output }} dest=/tmp/{{random_name}}_ec2_output.json
 
-- shell:  jq '.instances[0] | {"{{ item.key }}":{public_ip:.public_ip,node_type:.instance_type,id:.id,public_dns_name:.public_dns_name}}' /tmp/{{random_name}}ec2_instance_info_output.json
+- shell:  jq '.instances[0] | {"{{ item.key }}":{public_ip:.public_ip,node_type:.instance_type,id:.id,public_dns_name:.public_dns_name}}' /tmp/{{random_name}}_ec2_output.json
   register: vm_provision_attributes
   
      
