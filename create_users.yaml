@@ -26,4 +26,5 @@
         ssh_keys: "{{ item.value['user_key_pair']['keys'] }}"
         default_user: ubuntu
         user_name:  "{{ item.value['user_name'] }}"
+        public_ip: "{{public_ip}}"
       loop: "{{ attributes | dict2items }}"
