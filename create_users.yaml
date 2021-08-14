@@ -21,10 +21,17 @@
         name: attributes
                      
         
-    - include_tasks: create_user.yaml
+    - include_tasks: add_hosts.yaml.yaml
       vars: 
-        ssh_keys: "{{ item.value['user_key_pair']['keys'] }}"
+#         ssh_keys: "{{ item.value['user_key_pair']['keys'] }}"
         default_user: ubuntu
-        user_name:  "{{ item.value['user_name'] }}"
-        public_ip: "{{public_ip}}"
+#         user_name:  "{{ item.value['user_name'] }}"
+        public_ip: "{{item.value['public_ip']}}"
       loop: "{{ attributes | dict2items }}"
+      
+    
+- hosts: vms
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:  
