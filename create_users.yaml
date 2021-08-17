@@ -1,3 +1,5 @@
+---
+
 - hosts: localhost
   vars:
     ansible_python_interpreter: /usr/bin/python3
@@ -32,7 +34,7 @@
         public_ip: "{{item.value['public_ip']}}"
       loop: "{{ attributes | dict2items }}"
       
-    
+--- 
 - hosts: vms
   vars:
     ansible_python_interpreter: /usr/bin/python3
