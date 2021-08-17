@@ -12,7 +12,7 @@
         # traffic on all ports is allowed, regardless of any ports you specify
         from_port: 10050 # this value is ignored
         to_port: 10050 # this value is ignored
-#         cidr_ip: 10.0.0.0/8
+        cidr_ip: 0.0.0.0/0
       register: group_output
       
     - local_action: copy content={{ group_output }} dest=/tmp/"{{random_name}}"_ec2_group_output.json
