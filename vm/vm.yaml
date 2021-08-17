@@ -4,6 +4,7 @@
     instance_type: "{{flavor}}"
     image: "{{image_id}}"
     region: "{{region}}"
+    availability_zone: "{{availability_zone}}"
     wait: yes
     volumes:
       - device_name: "{{volume_path}"
@@ -23,6 +24,7 @@
     instance_type: "{{flavor}}"
     image: "{{image_id}}"
     region: "{{region}}"
+    availability_zone: "{{availability_zone}}"
     wait: yes
     monitoring: no
     vpc_subnet_id: "{{subnet_id}}"
