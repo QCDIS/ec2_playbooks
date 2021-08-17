@@ -1,6 +1,6 @@
 - ec2:
     key_name: "{{ssh_key_name}}"
-    group: "{{security_group_name}}"
+    group: AllTrafficGroup
     instance_type: "{{flavor}}"
     image: "{{image_id}}"
     region: "{{region}}"
@@ -19,7 +19,7 @@
   
 - ec2:
     key_name: "{{ssh_key_name}}"
-    group: "{{security_group_name}}"
+    group: AllTrafficGroup
     instance_type: "{{flavor}}"
     image: "{{image_id}}"
     region: "{{region}}"
