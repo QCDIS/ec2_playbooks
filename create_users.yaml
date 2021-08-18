@@ -70,7 +70,7 @@
       become_method: sudo
   
     - copy: 
-        source: "/home/{{ansible_ssh_user}}/.ssh/authorized_keys
+        source: /home/{{ansible_ssh_user}}/.ssh/authorized_keys
         dest: /home/{{user_name}}/.ssh/authorized_keys
         mode: 600
       become: yes
@@ -78,6 +78,6 @@
             
     - file:
         path: /home/{{user_name}}/
-        owner: {{ user_name }}
-        group: {{ user_name }}
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
       
