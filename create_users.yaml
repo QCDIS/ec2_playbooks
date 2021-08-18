@@ -62,13 +62,12 @@
         state: present
       become: yes
       become_method: sudo
-        
-        
- 
-    - debug:
-        var: hostvars['attributes_holder']['attributes']
-          
-          
+       
+    - file:
+      path: /home/{{user_name}}/.ssh
+      state: directory
+      become: yes
+      become_method: sudo
   
     - copy: 
         content: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
