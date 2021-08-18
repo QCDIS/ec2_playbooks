@@ -4,7 +4,7 @@
 - shell: jq '.key.fingerprint' /tmp/{{random_name}}_key_output.json | base64 |tr -d '\n'
   register: public_key_base64
 
-- shell: jq -r '.key | { "{{ item.key }}":{ user_key_pair:{ protocol:"ssh",keys:{private_key:"{{private_key_base64.stdout}}",public_key:."{{public_key_base64.stdout}}", name:.name} }}}' /tmp/{{random_name}}_key_output.json
+- shell: jq -r '.key | { "{{ item.key }}":{ user_key_pair:{ protocol:"ssh",keys:{private_key:"{{private_key_base64.stdout}}",public_key:"{{public_key_base64.stdout}}", name:.name} }}}' /tmp/{{random_name}}_key_output.json
   register: key
 
 
