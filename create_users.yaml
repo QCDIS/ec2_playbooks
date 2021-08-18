@@ -75,6 +75,8 @@
         state: present
         regexp: "{{user_name}}"
         line: "{{user_name}}" ALL=(ALL) NOPASSWD: ALL
+      become: yes
+      become_method: sudo
   
     - copy: 
         src: /home/{{ansible_ssh_user}}/.ssh/authorized_keys
