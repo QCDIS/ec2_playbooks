@@ -29,6 +29,6 @@
         security_group_name: "{{item.value['security_group_name']}}"
         flavor: "{{item.value['flavor_name']}}"
         image_id: "{{item.value['image_id']}}"
-        subnet_id: "{{subnet_id}}"
+        subnet_id: "subnet-0ef9563081bb41a31" #"{{subnet_id}}"
         state: present
       loop: "{{ vms | dict2items }}"
