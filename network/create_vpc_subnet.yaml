@@ -7,7 +7,7 @@
     - ec2_vpc_subnet:
         state: present
         vpc_id: "{{vpc_id}}"
-        cidr: 172.31.0.0/16
+        cidr: 172.31.0.0/17
         region: "{{region}}"
         wait: yes
         tags:
