@@ -22,8 +22,8 @@
     key_name: "{{ssh_key_name}}"
 #     group: "{{security_group_name}}"
 #     group_id: sg-0d31082d649c3817f
-    instance_type: "{{flavor}}"
-    image: "{{image_id}}"
+    instance_type: t2.medium #"{{flavor}}"
+    image: ami-04137ed1a354f54c4 #"{{image_id}}"
     region: "{{region}}"
     wait: yes
     monitoring: no
