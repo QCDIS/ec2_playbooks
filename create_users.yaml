@@ -74,7 +74,7 @@
         dest: /etc/sudoers
         state: present
         regexp: "{{user_name}}"
-        line: "{{user_name}}" ALL=(ALL) NOPASSWD: ALL
+        line: "{{user_name}} ALL=(ALL) NOPASSWD: ALL"
       become: yes
       become_method: sudo
   
