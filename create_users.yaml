@@ -33,6 +33,11 @@
         hostname: "{{item.value['public_ip']}}"
         groupname: vms
       loop: "{{ attributes | dict2items }}"     
+      
+    - name: Add attributes to dummy host
+      add_host:
+          name: "attributes_holder"
+          attributes: "{{ attributes }}"          
         
     - wait_for:
         host: "{{item.value['public_ip']}}"
@@ -40,7 +45,7 @@
         state: started
       loop: "{{ attributes | dict2items }}"        
       
-        
+            
         
 - hosts: vms
   vars:
@@ -58,12 +63,18 @@
       become: yes
       become_method: sudo
         
+        
+ 
+    - debug:
+        var: {{ hostvars['attributes_holder']['attributes'] }}
+          
+          
   
     - copy: 
         content: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
         dest: /home/{{user_name}}/.ssh/id_rsa.rsa
         mode: 600
-      loop: "{{ attributes | dict2items }}"
+      loop: "{{ hostvars['attributes_holder']['attributes'] | dict2items }}"
       become: yes
       become_method: sudo
       
@@ -71,7 +82,7 @@
         content: "{{ item.value['user_key_pair']['keys']['private_key'] | b64decode | replace('\"','') | replace('-----BEGIN RSA PRIVATE KEY-----','-----BEGIN RSA PRIVATE KEY-----\n') | replace('-----END RSA PRIVATE KEY-----','\n-----END RSA PRIVATE KEY-----')}}"
         dest: /home/{{user_name}}//.ssh/id_rsa
         mode: 600
-      loop: "{{ attributes | dict2items }}"
+      loop: "{{ hostvars['attributes_holder']['attributes'] | dict2items }}"
       become: yes
       become_method: sudo
       
