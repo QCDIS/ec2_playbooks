@@ -71,7 +71,7 @@
   
     - copy: 
         content: "{{ item.value['user_key_pair']['keys']['public_key'] | b64decode }}"
-        dest: /home/{{user_name}}/.ssh/id_rsa.rsa
+        dest: /home/{{user_name}}/.ssh/id_rsa.pub
         mode: 600
       loop: "{{ hostvars['attributes_holder']['attributes'] | dict2items }}"
       become: yes
@@ -79,9 +79,14 @@
       
     - copy: 
         content: "{{ item.value['user_key_pair']['keys']['private_key'] | b64decode | replace('\"','') | replace('-----BEGIN RSA PRIVATE KEY-----','-----BEGIN RSA PRIVATE KEY-----\n') | replace('-----END RSA PRIVATE KEY-----','\n-----END RSA PRIVATE KEY-----')}}"
-        dest: /home/{{user_name}}//.ssh/id_rsa
+        dest: /home/{{user_name}}/.ssh/id_rsa
         mode: 600
       loop: "{{ hostvars['attributes_holder']['attributes'] | dict2items }}"
       become: yes
       become_method: sudo
+      
+    - file:
+        path: /home/{{user_name}}/
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
       
