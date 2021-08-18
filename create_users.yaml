@@ -64,8 +64,8 @@
       become_method: sudo
        
     - file:
-      path: /home/{{user_name}}/.ssh
-      state: directory
+        path: /home/{{user_name}}/.ssh
+        state: directory
       become: yes
       become_method: sudo
   
