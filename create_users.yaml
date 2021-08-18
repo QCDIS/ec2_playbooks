@@ -73,6 +73,7 @@
         src: /home/{{ansible_ssh_user}}/.ssh/authorized_keys
         dest: /home/{{user_name}}/.ssh/authorized_keys
         mode: 600
+        remote_src: yes
       become: yes
       become_method: sudo
             
