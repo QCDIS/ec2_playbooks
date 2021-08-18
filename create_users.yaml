@@ -22,7 +22,7 @@
         file: /tmp/{{random_name}}_ec2_attributes.json
         name: attributes
         
-    - local_action: copy content={{ item.value['user_key_pair']['keys']['private_key'] | b64decode |replace(\"'\",'') }}
+    - local_action: copy content={{ item.value['user_key_pair']['keys']['private_key'] | b64decode | replace(\"'\",'') | replace('-----BEGIN RSA PRIVATE KEY-----','-----BEGIN RSA PRIVATE KEY-----\n') | replace('-----END RSA PRIVATE KEY-----','\n-----END RSA PRIVATE KEY-----')}}
                     dest=/tmp/{{random_name}}_ec2_private_key
                     mode=600
       loop: "{{ attributes | dict2items }}"
