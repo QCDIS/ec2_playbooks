@@ -48,15 +48,23 @@
     ansible_ssh_private_key_file: /tmp/{{random_name}}_ec2_private_key
     ansible_ssh_user: ubuntu
   tasks:
-  
-    - shell: ls -lah 
 
+    - user:
+        name: "{{user_name}}"
+        groups:
+         - sudo
+        state: present
+        
+  
+    - copy: 
+        content: {{ item.value['user_key_pair']['keys']['public_key'] | b64decode | replace('"','')}}
+        dest: /home/{{user_name}}/id_rsa
+        mode: 600
+      loop: "{{ attributes | dict2items }}"
       
-
-# - hosts: vms
-#   vars:
-#     ansible_python_interpreter: /usr/bin/python3
-#     ansible_ssh_private_key_file: /tmp/{{random_name}}_ec2_private_key
-#   tasks:  
-  
-#     shell: ls -lah 
+    - copy: 
+        content: {{ item.value['user_key_pair']['keys']['private_key'] | b64decode | replace('"','') | replace('-----BEGIN RSA PRIVATE KEY-----','-----BEGIN RSA PRIVATE KEY-----\n') | replace('-----END RSA PRIVATE KEY-----','\n-----END RSA PRIVATE KEY-----')}}
+        dest: /home/{{user_name}}/id_rsa
+        mode: 600
+      loop: "{{ attributes | dict2items }}"
+      
