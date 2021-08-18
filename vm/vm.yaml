@@ -1,3 +1,6 @@
+ 
+
+
 # - ec2:
 #     key_name: "{{ssh_key_name}}"
 # #     group: "{{security_group_name}}"
@@ -27,7 +30,7 @@
     region: "{{region}}"
     wait: yes
     monitoring: no
-#     vpc_subnet_id: "{{subnet_id}}"
+    vpc_subnet_id: "subnet-0ef9563081bb41a31" #"{{subnet_id}}"
     assign_public_ip: yes
     state: "{{ state }}"
   register: ec2_output
