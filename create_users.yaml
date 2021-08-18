@@ -72,13 +72,10 @@
     - copy: 
         src: /home/{{ansible_ssh_user}}/.ssh/authorized_keys
         dest: /home/{{user_name}}/.ssh/authorized_keys
-        mode: 600
+        mode: '600'
         remote_src: yes
+        owner: "{{user_name}}"
+        group: "{{ user_name }}"
       become: yes
       become_method: sudo
-            
-    - file:
-        path: /home/{{user_name}}/
-        owner: "{{ user_name }}"
-        group: "{{ user_name }}"
       
