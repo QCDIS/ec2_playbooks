@@ -1,4 +1,5 @@
-- shell: jq -r '.key.private_key| gsub("[\\n\\t]"; "")' /tmp/{{random_name}}_key_output.json | base64 |tr -d '\n'
+# - shell: jq -r '.key.private_key | gsub("[\\n\\t]"; "")' /tmp/{{random_name}}_key_output.json | base64 |tr -d '\n'
+- shell: jq -r '.key.private_key ' /tmp/{{random_name}}_key_output.json | base64
   register: private_key_base64
   
 - shell: jq -r '.key.fingerprint' /tmp/{{random_name}}_key_output.json | base64 |tr -d '\n'
