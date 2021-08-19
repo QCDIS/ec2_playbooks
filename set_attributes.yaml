@@ -7,7 +7,7 @@
     - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
       with_items:
         - { name: "{{random_name}}_ec2_vms", value: "{{ vm }}" }        
-        - { name: "{{random_name}}_ec2_ssh_keys", value: "{{ ssh_keys }}"
+        - { name: "{{random_name}}_ec2_ssh_keys", value: "{{ ssh_keys | b64decode | replace('\"','') | replace('-----BEGIN RSA PRIVATE KEY-----','-----BEGIN RSA PRIVATE KEY-----\n') | replace('-----END RSA PRIVATE KEY-----','\n-----END RSA PRIVATE KEY-----') | b64encode }}"
         
         
 
