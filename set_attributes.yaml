@@ -9,7 +9,8 @@
         - { name: "{{random_name}}_ec2_vms", value: "{{ vm }}" }        
 #         - { name: "{{random_name}}_ec2_ssh_keys", value: "{{ ssh_keys }}" }
 
-    - local_action: copy content={{ ssh_keys | b64decode | replace('"','') | replace('-----BEGIN RSA PRIVATE KEY-----','-----BEGIN RSA PRIVATE KEY-----\n') | replace('-----END RSA PRIVATE KEY-----','\n-----END RSA PRIVATE KEY-----')}}
+#     - local_action: copy content={{ ssh_keys | b64decode | replace('"','') | replace('-----BEGIN RSA PRIVATE KEY-----','-----BEGIN RSA PRIVATE KEY-----\n') | replace('-----END RSA PRIVATE KEY-----','\n-----END RSA PRIVATE KEY-----')}}
+    - local_action: copy content={{ ssh_keys }}
                     dest=/tmp/{{random_name}}_ec2_ssh_keys.json
                     
         
