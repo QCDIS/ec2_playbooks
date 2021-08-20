@@ -4,12 +4,8 @@
 
   tasks:  
          
-    - include_tasks: vm.yaml
+    - include_tasks: delete_vm.yaml
       vars: 
-        ssh_key_name: "{{ item.value['user_key_pair']['keys']['name'] }}"
-        security_group_name: "{{item.value['security_group_name']}}"
-        flavor: "{{item.value['flavor_name']}}"
-        image_id: "{{item.value['image_id']}}"
-        subnet_id: "{{subnet_id}}"
+        image_id: "{{item.value['id']}}"
         state: absent
-      loop: "{{ vms | dict2items }}"
+      loop: "{{ hostvars['localhost']['instances'] | dict2items }}"
