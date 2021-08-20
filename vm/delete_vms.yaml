@@ -3,31 +3,7 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:  
-        
-  
-    - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
-      with_items:
-        - { name: "{{random_name}}_ec2_selected_flavors", value: "{{ selected_flavors }}" }
-        - { name: "{{random_name}}_ec2_ssh_keys", value: "{{ ssh_keys }}" }
-        - { name: "{{random_name}}_ec2_instances", value: "{{ hostvars['localhost']['instances'] }}" }
-        - { name: "{{random_name}}_ec2_images", value: "{{ images }}" }
-        
-        
-
-    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_selected_flavors.json /tmp/{{random_name}}_ec2_ssh_keys.json > /tmp/{{random_name}}_ec2_flavors_ssh_keys.json
-    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_flavors_ssh_keys.json /tmp/{{random_name}}_ec2_instances.json > /tmp/{{random_name}}_ec2_flavors_ssh_keys_instances.json
-    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_flavors_ssh_keys_instances.json /tmp/{{random_name}}_ec2_images.json > /tmp/{{random_name}}_ec2_vms.json
-      
-    - include_vars:
-        file: /tmp/{{random_name}}_ec2_vms.json
-        name: vms
-        
-        
-    - debug: 
-        var: item
-      loop: "{{ vms | dict2items }}"
-      
-        
+         
     - include_tasks: vm.yaml
       vars: 
         ssh_key_name: "{{ item.value['user_key_pair']['keys']['name'] }}"
