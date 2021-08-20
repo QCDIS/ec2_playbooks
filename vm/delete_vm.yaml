@@ -1,0 +1,31 @@
+ 
+
+
+- ec2:
+    image: "{{image_id}}"
+    region: "{{region}}"
+    state: "{{ state }}"
+    wait: yes
+  register: ec2_output
+  when: volume_path is defined
+  
+  
+- ec2:
+    instance_type: "{{flavor}}"
+    image: "{{image_id}}"
+    region: "{{region}}"
+    wait: yes
+    state: "{{ state }}"
+  register: ec2_output
+  when: volume_path is not defined
+  
+    
+- local_action: copy content={{ ec2_output }} dest=/tmp/{{random_name}}_ec2_delete_output.json
+
+- shell:  jq '.instances[0] | {"{{ item.key }}":{public_ip:.public_ip,node_type:.instance_type,id:.id,public_dns_name:.public_dns_name}}' /tmp/{{random_name}}_ec2_delete_output.json
+  register: vm_provision_attributes
+  
+     
+- set_stats:
+    data:
+      vm: "{{ vm_provision_attributes.stdout }}"
