@@ -1,14 +1,4 @@
-- debug:
-   var: volume_size_num
 
-- debug:
-   var: volume_path
-
-- debug:
-   var: volume_type_name
-
-- debug:
-   var: volume_size_num
 
 
 - ec2:
