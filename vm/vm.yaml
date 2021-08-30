@@ -10,7 +10,7 @@
     region: "{{region}}"
     wait: yes
     volumes:
-      - device_name: "{{volume_path}"
+      - device_name: "{{volume_path}}"
         volume_type: "{{volume_type_name}}"
         volume_size: "{{volume_size_num}}"
         delete_on_termination: true
@@ -50,7 +50,7 @@
     
 - local_action: copy content={{ ec2_output }} dest=/tmp/{{random_name}}_ec2_output.json
 
-- shell:  jq '.instances[0] | {"{{ item.key }}":{random_name:"1",public_ip:.public_ip,node_type:.instance_type,id:.id,public_dns_name:.public_dns_name}}' /tmp/{{random_name}}_ec2_output.json
+- shell:  jq '.instances[0] | {"{{ item.key }}":{random_name:"{{random_name}}",public_ip:.public_ip,node_type:.instance_type,id:.id,public_dns_name:.public_dns_name}}' /tmp/{{random_name}}_ec2_output.json
   register: vm_provision_attributes
   
      
