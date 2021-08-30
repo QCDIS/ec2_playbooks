@@ -20,11 +20,7 @@
     vpc_subnet_id: "{{subnet_id}}"
     assign_public_ip: yes
   register: ec2_output
-  when: volume_path is defined
-  
-- shell: ln -s /dev/nvme1n1 /dev/xvdh
-  when: volume_path is defined
-  
+  when: volume_path is defined 
   
 # - ec2:
 #     key_name: "{{ssh_key_name}}"
