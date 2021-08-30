@@ -2,7 +2,10 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
-  tasks:  
+  tasks: 
+    - debug:
+        var: "{{item.value['id']}}"
+      loop: "{{ hostvars['localhost']['instances'] | dict2items }}"
          
     - include_tasks: delete_vm.yaml
       vars: 
