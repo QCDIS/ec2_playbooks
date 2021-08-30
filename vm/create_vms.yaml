@@ -21,6 +21,10 @@
     - include_vars:
         file: /tmp/{{random_name}}_ec2_vms.json
         name: vms
+        
+    - debug: 
+        var: item.value['disk_size']
+      loop: "{{ vms | dict2items }}"
               
     - debug: 
         var: item.value['disk_size'] | int // 1000
