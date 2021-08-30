@@ -33,5 +33,5 @@
         state: present
         volume_path: /dev/xvdh
         volume_type_name: gp2
-        volume_size_num: "{{ item.value['disk_size'] // 1000 }}"
+        volume_size_num: "{{ item.value['disk_size'] | int // 1000 }}"
       loop: "{{ vms | dict2items }}"
