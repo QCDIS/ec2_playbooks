@@ -21,24 +21,17 @@
     - include_vars:
         file: /tmp/{{random_name}}_ec2_vms.json
         name: vms
-        
-    - debug: 
-        var: item.value['disk_size']
-      loop: "{{ vms | dict2items }}"
-              
-    - debug: 
-        var: item.value['disk_size'] | replace(' MB','') | int // 1000
-      loop: "{{ vms | dict2items }}"
+       
       
-#     - include_tasks: vm.yaml
-#       vars: 
-#         ssh_key_name: "{{ item.value['user_key_pair']['keys']['name'] }}"
-#         security_group_name: "{{item.value['security_group_name']}}"
-#         flavor: "{{item.value['flavor_name']}}"
-#         image_id: "{{item.value['image_id']}}"
-#         subnet_id: "subnet-0ef9563081bb41a31" #"{{subnet_id}}"
-#         state: present
-#         volume_path: /dev/xvdh
-#         volume_type_name: gp2
-#         volume_size_num: "{{ item.value['disk_size'] | int // 1000 }}"
-#       loop: "{{ vms | dict2items }}"
+    - include_tasks: vm.yaml
+      vars: 
+        ssh_key_name: "{{ item.value['user_key_pair']['keys']['name'] }}"
+        security_group_name: "{{item.value['security_group_name']}}"
+        flavor: "{{item.value['flavor_name']}}"
+        image_id: "{{item.value['image_id']}}"
+        subnet_id: "subnet-0ef9563081bb41a31" #"{{subnet_id}}"
+        state: present
+        volume_path: /dev/xvdh
+        volume_type_name: gp2
+        volume_size_num: "{{ item.value['disk_size'] | replace(' MB','') | int // 1000 }}"
+      loop: "{{ vms | dict2items }}"
