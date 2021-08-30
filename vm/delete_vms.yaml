@@ -4,7 +4,7 @@
 
   tasks: 
     - debug:
-        var: "{{item.value['id']}}"
+        var: item.value['id']
       loop: "{{ hostvars['localhost']['instances'] | dict2items }}"
          
     - include_tasks: delete_vm.yaml
