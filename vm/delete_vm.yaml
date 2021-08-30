@@ -2,7 +2,7 @@
 
 
 - ec2:
-    image: "{{image_id}}"
+    instance_ids: "{{image_id}}"
     region: "{{region}}"
     state: "{{ state }}"
     wait: no
