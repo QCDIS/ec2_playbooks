@@ -31,4 +31,7 @@
         image_id: "{{item.value['image_id']}}"
         subnet_id: "subnet-0ef9563081bb41a31" #"{{subnet_id}}"
         state: present
+        volume_path: /dev/xvdh
+        volume_type: gp2
+        volume_size: "{{ item.value['disk_size'] // 1000 }}"
       loop: "{{ vms | dict2items }}"
