@@ -9,6 +9,8 @@
     image: "{{image_id}}"
     region: "{{region}}"
     wait: yes
+    instance_tags:
+       name: "{{random_name}}"
     volumes:
       - device_name: "{{volume_path}}"
         volume_type: "{{volume_type_name}}"
