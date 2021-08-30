@@ -27,7 +27,7 @@
       loop: "{{ vms | dict2items }}"
               
     - debug: 
-        var: item.value['disk_size'] | int // 1000
+        var: item.value['disk_size'] | replace(' MB','') | int // 1000
       loop: "{{ vms | dict2items }}"
       
 #     - include_tasks: vm.yaml
