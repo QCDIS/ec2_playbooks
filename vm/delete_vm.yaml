@@ -7,17 +7,16 @@
     state: "{{ state }}"
     wait: yes
   register: ec2_output
-  when: volume_path is defined
   
   
-- ec2:
-    instance_type: "{{flavor}}"
-    image: "{{image_id}}"
-    region: "{{region}}"
-    wait: yes
-    state: "{{ state }}"
-  register: ec2_output
-  when: volume_path is not defined
+# - ec2:
+#     instance_type: "{{flavor}}"
+#     image: "{{image_id}}"
+#     region: "{{region}}"
+#     wait: yes
+#     state: "{{ state }}"
+#   register: ec2_output
+#   when: volume_path is not defined
   
     
 - local_action: copy content={{ ec2_output }} dest=/tmp/{{random_name}}_ec2_delete_output.json
