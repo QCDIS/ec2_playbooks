@@ -5,7 +5,7 @@
     image: "{{image_id}}"
     region: "{{region}}"
     state: "{{ state }}"
-    wait: yes
+    wait: no
   register: ec2_output
   
   
