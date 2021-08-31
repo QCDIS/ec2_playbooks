@@ -89,7 +89,4 @@
       become: yes
       become_method: sudo
       
-    - shell: ln -s /dev/nvme1n1 /dev/xvdh
-      become: yes
-      become_method: sudo
       
