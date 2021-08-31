@@ -12,7 +12,7 @@ if __name__ == '__main__':
         aws_secret_access_key=aws_secret_access_key
     )
 
-    types = client.describe_instance_types(Filters=[{'Name': 'instance-type', 'Values': ["t2.micro", "t3.micro"]}])
+    types = client.describe_instance_types()
     instance_types = []
     for type in types['InstanceTypes']:
         instance_types.append(type)
