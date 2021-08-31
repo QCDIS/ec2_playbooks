@@ -1,0 +1,92 @@
+---
+
+- hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:  
+        
+  
+    - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
+      with_items:
+        - { name: "{{random_name}}_ec2_vms", value: "{{ vm }}" }        
+        - { name: "{{random_name}}_ec2_ssh_keys", value: "{{ ssh_keys }}" }      
+        - { name: "{{random_name}}_ec2_instances", value: "{{ hostvars['localhost']['instances'] }}" }
+        
+        
+
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_ssh_keys.json  /tmp/{{random_name}}_ec2_vms.json > /tmp/{{random_name}}_ec2_ssh_keys_vms.json  
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_ssh_keys_vms.json  /tmp/{{random_name}}_ec2_instances.json > /tmp/{{random_name}}_ec2_attributes.json  
+      
+    - include_vars:
+        file: /tmp/{{random_name}}_ec2_attributes.json
+        name: attributes
+        
+#     - local_action: copy content={{ item.value['user_key_pair']['keys']['private_key'] | b64decode | replace('"','') | replace('-----BEGIN RSA PRIVATE KEY-----','-----BEGIN RSA PRIVATE KEY-----\n') | replace('-----END RSA PRIVATE KEY-----','\n-----END RSA PRIVATE KEY-----')}}
+    - local_action: copy content={{ item.value['user_key_pair']['keys']['private_key'] | b64decode }}
+                    dest=/tmp/{{random_name}}_ec2_private_key
+                    mode=600
+      loop: "{{ attributes | dict2items }}"
+                     
+      
+    - name: Add new instance to vms host group
+      add_host:
+        hostname: "{{item.value['public_ip']}}"
+        groupname: vms
+      loop: "{{ attributes | dict2items }}"     
+      
+    - name: Add attributes to dummy host
+      add_host:
+          name: "attributes_holder"
+          attributes: "{{ attributes }}"          
+        
+    - wait_for:
+        host: "{{item.value['public_ip']}}"
+        port: 22
+        state: started
+      loop: "{{ attributes | dict2items }}"        
+      
+            
+        
+- hosts: vms
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    ansible_ssh_private_key_file: /tmp/{{random_name}}_ec2_private_key
+    ansible_ssh_user: ubuntu
+    user_name: vm_user
+  tasks:
+
+    - user:
+        name: "{{user_name}}"
+        groups:
+         - sudo
+        state: present
+      become: yes
+      become_method: sudo
+       
+    - file:
+        path: /home/{{user_name}}/.ssh
+        state: directory
+      become: yes
+      become_method: sudo
+      
+    - name: Allow user_name group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: "{{user_name}}"
+        line: "{{user_name}} ALL=(ALL) NOPASSWD: ALL"
+      become: yes
+      become_method: sudo
+  
+    - copy: 
+        src: /home/{{ansible_ssh_user}}/.ssh/authorized_keys
+        dest: /home/{{user_name}}/.ssh/authorized_keys
+        mode: '600'
+        remote_src: yes
+        owner: "{{user_name}}"
+        group: "{{ user_name }}"
+      become: yes
+      become_method: sudo
+      
+      

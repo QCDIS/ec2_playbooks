@@ -1,0 +1,25 @@
+- hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+  
+    - local_action: copy content={{ item.value }} dest=/tmp/{{ item.name }}.json
+      with_items:
+        - { name: "{{random_name}}_ec2_vms", value: "{{ vm }}" }        
+        - { name: "{{random_name}}_ec2_ssh_keys", value: "{{ ssh_keys }}" }            
+      when: ssh_keys is defined   
+        
+
+    - shell: jq -s '.[0] * .[1]' /tmp/{{random_name}}_ec2_ssh_keys.json  /tmp/{{random_name}}_ec2_vms.json > /tmp/{{random_name}}_ec2_attributes.json  
+      when: ssh_keys is defined   
+      
+    - include_vars:
+        file: /tmp/{{random_name}}_ec2_attributes.json
+        name: attributes
+      when: ssh_keys is defined   
+
+    - set_stats:
+        data: "{{ attributes }}"
+      register: attributes
+      when: ssh_keys is defined   

@@ -1,0 +1,28 @@
+- hosts: localhost
+  vars:
+      ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    
+    - ec2_vpc_subnet:
+        state: absent
+        vpc_id: "{{vpc_id}}"
+        cidr: 172.23.0.0/16
+        region: "{{region}}"
+        wait: yes
+        tags:
+          Name: "{{random_name}}"
+      register: subnet_output
+      
+#     - debug:
+#         var: subnet_output
+
+#     - local_action: copy content={{ subnet_output }} dest=/tmp/{{random_name}}_ec2_subnet_output.json
+
+
+#     - shell: jq -r '.| {subnet_id:.subnet.id}' /tmp/{{random_name}}_ec2_subnet_output.json
+#       register: ec2_subnet_id
+
+#     - set_stats:
+#         data:
+#           "{{ ec2_subnet_id.stdout }}"

@@ -1,0 +1,8 @@
+
+
+- shell: jq -r '.| {"{{ item.key }}":{subnet_id:.subnet.id}}' /tmp/{{random_name}}_ec2_subnet_output.json
+  register: ec2_subnet_id
+
+- set_stats:
+    data:
+      subnet_id: "{{ ec2_subnet_id.stdout }}"

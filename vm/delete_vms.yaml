@@ -1,0 +1,14 @@
+- hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks: 
+    - debug:
+        var: item.value['id']
+      loop: "{{ hostvars['localhost']['instances'] | dict2items }}"
+         
+    - include_tasks: delete_vm.yaml
+      vars: 
+        image_id: "{{item.value['id']}}"
+        state: absent
+      loop: "{{ hostvars['localhost']['instances'] | dict2items }}"

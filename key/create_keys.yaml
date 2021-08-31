@@ -8,7 +8,7 @@
         region: "{{region}}"
       register: key_output
 
-    - local_action: copy content={{ key_output }} dest=/tmp/key_output.json
+    - local_action: copy content={{ key_output }} dest=/tmp/{{random_name}}_key_output.json
 
     - include_tasks: create_key.yaml
       vars:

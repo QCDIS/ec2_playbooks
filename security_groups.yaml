@@ -6,27 +6,43 @@
         name: "{{random_name}}"
         description: sdia generated
         vpc_id: "{{vpc_id}}"
-        region: "{{region_name}}"
-
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 8080
+            to_port: 8080
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 443
+            to_port: 443
+            cidr_ip: 0.0.0.0/0
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+      register: group_output
       
-    - local_action: copy content={{ group_output }} dest=/tmp/group_output.json
+    - local_action: copy content={{ group_output }} dest=/tmp/"{{random_name}}"_ec2_group_output.json
         
  
-    - include_tasks: security_group.yaml
-      vars:
-        instance_name: "{{ item.key }}"
-      loop: "{{ instances | dict2items }}"
+#     - include_tasks: security_group.yaml
+#       vars:
+#         instance_name: "{{ item.key }}"
+#       loop: "{{ instances | dict2items }}"
       
-    - shell: jq '{"{{topology_name}}":{resource_group:.state.name}}' /tmp/resourcegroup_output.json > /tmp/resourcegroup_attribute.json
+#     - shell: jq '{"{{topology_name}}":{resource_group:.state.name}}' /tmp/"{{random_name}}"_ec2_group_output.json > /tmp/"{{random_name}}"_ec2_group_attribute.json
     
-    - include_vars:
-        file: /tmp/resourcegroup_attribute.json
-        name: resourcegroup_attribute
+#     - include_vars:
+#         file: /tmp/"{{random_name}}"_ec2_group_attribute.json
+#         name: resourcegroup_attribute
         
     - set_stats:
         data:
-          resource_group_name: "{{ random_name }}"
+          security_group_name: "{{ random_name }}"
           
-    - set_stats:
-        data: 
-          resourcegroup_attribute: "{{resourcegroup_attribute}}"
+#     - set_stats:
+#         data: 
+#           resourcegroup_attribute: "{{resourcegroup_attribute}}"

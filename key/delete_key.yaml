@@ -7,3 +7,8 @@
         name: "{{random_name}}"
         region: "{{region}}"
         state: absent
+        
+      
+    - set_stats:
+        data: 
+          random_name: "{{random_name}}"

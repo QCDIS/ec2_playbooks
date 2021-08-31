@@ -7,20 +7,19 @@
     - ec2_vpc_net:
         name: "{{random_name}}"
         state: present
-        cidr_block: 172.23.0.0/16
+        cidr_block: 172.31.0.0/16
         region: "{{region}}"
-        tenancy: dedicated
       register: ec2_vpc_output
 
-    - local_action: copy content={{ ec2_vpc_output }} dest=/tmp/ec2_vpc_output.json
+    - local_action: copy content={{ ec2_vpc_output }} dest=/tmp/{{random_name}}_ec2_vpc_output.json
 
 
-    - include_tasks: vpc.yaml
-      vars:
-        instance_name: "{{ item.key }}"
-      loop: "{{ instances | dict2items }}"
+#     - include_tasks: vpc.yaml
+#       vars:
+#         instance_name: "{{ item.key }}"
+#       loop: "{{ instances | dict2items }}"
 
-    - shell: jq -r '.vpc.id' /tmp/ec2_vpc_output.json
+    - shell: jq -r '.vpc.id' /tmp/{{random_name}}_ec2_vpc_output.json
       register: vpc_id
 
     - set_stats:
