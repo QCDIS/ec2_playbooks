@@ -5,7 +5,7 @@ import numpy as np
 from numpy.linalg import norm
 
 
-def get_shorter_dist(available_instances, requested_instances):
+def get_shorter_dist(available_instances, requested_instances,preferred_family=None):
     flavors = available_instances
     selected_flavors = {}
     for requested_instance_name in requested_instances:
@@ -56,6 +56,6 @@ if __name__ == "__main__":
     f = open(requested_instances_file_path, )
     requested_instances = json.load(f)
 
-    selected_flavors = get_shorter_dist(available_instances, requested_instances)
+    selected_flavors = get_shorter_dist(available_instances, requested_instances,preferred_family)
     instances = {'selected_flavors': selected_flavors}
     print(json.dumps(instances))
