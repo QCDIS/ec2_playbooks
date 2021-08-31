@@ -16,25 +16,39 @@ def get_shorter_dist(available_instances, requested_instances):
         # int(requested_instance['disk_size'].split(' ')[0])])
 
         for flavor in flavors:
-            if not flavor['BareMetal'] and 'ProcessorInfo' in flavor and 'x86_64' in flavor['ProcessorInfo']['SupportedArchitectures'] and 't2' in flavor['InstanceType']:
-                available_vector = np.array([float(flavor['MemoryInfo']['SizeInMiB']),
-                                             float(flavor['VCpuInfo']['DefaultVCpus'])])
-                    # int(requested_instance['disk_size'].split(' ')[0])])
-                dist = norm(requested_vector - available_vector)
-                if dist < min_dist:
-                    min_dist = dist
-                    if 'InstanceType' in flavor:
-                        selected_flavor = {'flavor_name': flavor['InstanceType']}
-                    elif 'name' in flavor:
-                        selected_flavor = {'flavor_name': flavor['name']}
-                    selected_flavors[requested_instance_name] = selected_flavor
-
+            if not flavor['BareMetal'] and 'ProcessorInfo' in flavor and 'x86_64' in flavor['ProcessorInfo']['SupportedArchitectures']:
+                if preferred_family and preferred_family in flavor['InstanceType']:
+                    available_vector = np.array([float(flavor['MemoryInfo']['SizeInMiB']),
+                                                 float(flavor['VCpuInfo']['DefaultVCpus'])])
+                        # int(requested_instance['disk_size'].split(' ')[0])])
+                    dist = norm(requested_vector - available_vector)
+                    if dist < min_dist:
+                        min_dist = dist
+                        if 'InstanceType' in flavor:
+                            selected_flavor = {'flavor_name': flavor['InstanceType']}
+                        elif 'name' in flavor:
+                            selected_flavor = {'flavor_name': flavor['name']}
+                        selected_flavors[requested_instance_name] = selected_flavor
+                else:
+                    available_vector = np.array([float(flavor['MemoryInfo']['SizeInMiB']),
+                                                 float(flavor['VCpuInfo']['DefaultVCpus'])])
+                        # int(requested_instance['disk_size'].split(' ')[0])])
+                    dist = norm(requested_vector - available_vector)
+                    if dist < min_dist:
+                        min_dist = dist
+                        if 'InstanceType' in flavor:
+                            selected_flavor = {'flavor_name': flavor['InstanceType']}
+                        elif 'name' in flavor:
+                            selected_flavor = {'flavor_name': flavor['name']}
+                        selected_flavors[requested_instance_name] = selected_flavor
     return selected_flavors
 
 
 if __name__ == "__main__":
     available_instances_file_path = sys.argv[1]
     requested_instances_file_path = sys.argv[2]
+    if len(sys.argv) == 4:
+        preferred_family = sys.argv[3]
 
     f = open(available_instances_file_path, )
     available_instances = json.load(f)
