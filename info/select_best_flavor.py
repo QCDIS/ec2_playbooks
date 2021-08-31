@@ -23,6 +23,7 @@ def get_dist(flavor=None, requested_vector=None, min_dist=None, requested_instan
 
 def get_shorter_dist(available_instances, requested_instances, preferred_family=None):
     flavors = available_instances
+    selected_flavors = {}
     for requested_instance_name in requested_instances:
         min_dist = sys.maxsize
         requested_instance = requested_instances[requested_instance_name]
@@ -31,9 +32,9 @@ def get_shorter_dist(available_instances, requested_instances, preferred_family=
         for flavor in flavors:
             if not flavor['BareMetal'] and 'ProcessorInfo' in flavor and 'x86_64' in flavor['ProcessorInfo']['SupportedArchitectures']:
                 if preferred_family and preferred_family in flavor['InstanceType']:
-                    selected_flavors = get_dist(flavor, requested_vector, min_dist, requested_instance_name)
+                    selected_flavors.update(get_dist(flavor, requested_vector, min_dist, requested_instance_name))
                 elif not preferred_family:
-                    selected_flavors = get_dist(flavor, requested_vector, min_dist, requested_instance_name)
+                    selected_flavors.update(get_dist(flavor, requested_vector, min_dist, requested_instance_name))
     return selected_flavors
 
 
@@ -50,6 +51,5 @@ if __name__ == "__main__":
     f = open(requested_instances_file_path, )
     requested_instances = json.load(f)
 
-    selected_flavors = get_shorter_dist(available_instances, requested_instances, preferred_family)
-    instances = {'selected_flavors': selected_flavors}
+    instances = {'selected_flavors': get_shorter_dist(available_instances, requested_instances, preferred_family)}
     print(json.dumps(instances))
