@@ -27,8 +27,6 @@ def get_shorter_dist(available_instances, requested_instances):
                         selected_flavor = {'flavor_name': flavor['InstanceType']}
                     elif 'name' in flavor:
                         selected_flavor = {'flavor_name': flavor['name']}
-                    
-                    selected_flavor = {'flavor_name': 't2.medium'}
                     selected_flavors[requested_instance_name] = selected_flavor
 
     return selected_flavors
