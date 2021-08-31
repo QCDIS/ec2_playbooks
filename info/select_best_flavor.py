@@ -48,6 +48,7 @@ if __name__ == "__main__":
     available_instances_file_path = sys.argv[1]
     requested_instances_file_path = sys.argv[2]
     preferred_family = None
+    print(len(sys.argv))
     if len(sys.argv) == 4:
         preferred_family = sys.argv[3]
 
