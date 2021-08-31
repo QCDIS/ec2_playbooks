@@ -30,18 +30,6 @@ def get_shorter_dist(available_instances, requested_instances,preferred_family=N
                         elif 'name' in flavor:
                             selected_flavor = {'flavor_name': flavor['name']}
                         selected_flavors[requested_instance_name] = selected_flavor
-                else:
-                    available_vector = np.array([float(flavor['MemoryInfo']['SizeInMiB']),
-                                                 float(flavor['VCpuInfo']['DefaultVCpus'])])
-                        # int(requested_instance['disk_size'].split(' ')[0])])
-                    dist = norm(requested_vector - available_vector)
-                    if dist < min_dist:
-                        min_dist = dist
-                        if 'InstanceType' in flavor:
-                            selected_flavor = {'flavor_name': flavor['InstanceType']}
-                        elif 'name' in flavor:
-                            selected_flavor = {'flavor_name': flavor['name']}
-                        selected_flavors[requested_instance_name] = selected_flavor
     return selected_flavors
 
 
