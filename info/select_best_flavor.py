@@ -47,6 +47,7 @@ def get_shorter_dist(available_instances, requested_instances,preferred_family=N
 if __name__ == "__main__":
     available_instances_file_path = sys.argv[1]
     requested_instances_file_path = sys.argv[2]
+    preferred_family = None
     if len(sys.argv) == 4:
         preferred_family = sys.argv[3]
 
