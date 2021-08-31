@@ -6,6 +6,7 @@ from numpy.linalg import norm
 
 
 def get_shorter_dist(available_instances, requested_instances,preferred_family=None):
+    print(preferred_family)
     flavors = available_instances
     selected_flavors = {}
     for requested_instance_name in requested_instances:
@@ -48,7 +49,6 @@ if __name__ == "__main__":
     available_instances_file_path = sys.argv[1]
     requested_instances_file_path = sys.argv[2]
     preferred_family = None
-    print(len(sys.argv))
     if len(sys.argv) == 4:
         preferred_family = sys.argv[3]
 
