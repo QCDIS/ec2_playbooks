@@ -16,7 +16,7 @@ def get_shorter_dist(available_instances, requested_instances):
         # int(requested_instance['disk_size'].split(' ')[0])])
 
         for flavor in flavors:
-            if not flavor['BareMetal'] and 'ProcessorInfo' in flavor and 'x86_64' in flavor['ProcessorInfo']['SupportedArchitectures']:
+            if not flavor['BareMetal'] and 'ProcessorInfo' in flavor and 'x86_64' in flavor['ProcessorInfo']['SupportedArchitectures'] and 't' in flavor['name]:
                 available_vector = np.array([float(flavor['MemoryInfo']['SizeInMiB']),
                                              float(flavor['VCpuInfo']['DefaultVCpus'])])
                     # int(requested_instance['disk_size'].split(' ')[0])])
