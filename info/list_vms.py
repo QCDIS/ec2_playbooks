@@ -17,7 +17,8 @@ if __name__ == '__main__':
     for type in types['InstanceTypes']:
         instance_types.append(type)
         
-    t2_types = [] 
+    
     t2_nano = {'MemoryInfo':{'SizeInMiB':'0.5'},'VCpuInfo':{'DefaultVCpus':'1'},'name':'t2.nano'}
+    instance_types..append(t2_nano)
 
     print(json.dumps(instance_types))
