@@ -7,6 +7,10 @@
     state: "{{ state }}"
     wait: no
   register: ec2_output
+  retries: 3
+  delay: 0
+  until: not ec2_output.failed
+
   
   
 # - ec2:
