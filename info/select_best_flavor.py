@@ -14,9 +14,12 @@ def get_dist(flavor=None, requested_vector=None, min_dist=None, requested_instan
     if dist < min_dist:
         min_dist = dist
         if 'InstanceType' in flavor:
-            selected_flavor = {'flavor_name': flavor['InstanceType']}
+#             selected_flavor = {'flavor_name': flavor['InstanceType']}
+            selected_flavor = {'flavor_name': 't2.medium'}
+            
         elif 'name' in flavor:
-            selected_flavor = {'flavor_name': flavor['name']}
+#             selected_flavor = {'flavor_name': flavor['name']}
+            selected_flavor = {'flavor_name': 't2.medium'}
         selected_flavors[requested_instance_name] = selected_flavor
     return selected_flavors
 
