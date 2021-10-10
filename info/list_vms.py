@@ -29,6 +29,7 @@ if __name__ == '__main__':
     instance_types.append(t2_micro)
     instance_types.append(t2_small)
     instance_types.append(t2_medium)
+    instance_types.append(t2_large)
     instance_types.append(t2_xlarge)
     instance_types.append(t2_2xlarge)
 
