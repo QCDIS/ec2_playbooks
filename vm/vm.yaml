@@ -20,8 +20,8 @@
     vpc_subnet_id: "{{subnet_id}}"
     assign_public_ip: yes
   register: ec2_output
-  when: volume_path is defined 
-  
+  when: volume_path is defined
+
 # - ec2:
 #     key_name: "{{ssh_key_name}}"
 # #     group: "{{security_group_name}}"
@@ -36,12 +36,12 @@
 #     state: "{{ state }}"
 #   register: ec2_output
 #   when: volume_path is not defined
-  
+
 - debug:
     var: ec2_output
-    
 
-    
+
+
 - local_action: copy content={{ ec2_output }} dest=/tmp/{{random_name}}_ec2_output.json
 
 - shell:  jq '.instances[0] | {"{{ item.key }}":{random_name:"{{random_name}}",public_ip:.public_ip,node_type:.instance_type,id:.id,public_dns_name:.public_dns_name}}' /tmp/{{random_name}}_ec2_output.json
