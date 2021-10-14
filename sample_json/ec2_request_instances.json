@@ -1,7 +1,7 @@
 {
   "compute": {
-    "disk_size": "10000 MB",
-    "mem_size": "2000 MB",
-    "num_cores": 1
+    "disk_size": "20000 MB",
+    "mem_size": "8000 MB",
+    "num_cores": 2
   }
 }
