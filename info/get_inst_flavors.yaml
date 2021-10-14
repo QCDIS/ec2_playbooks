@@ -38,7 +38,7 @@
     - shell: cat /tmp/ec2_flavor_info_output_{{region}}.json
       register: flavors_output
 
-    - shell: python "{{ playbook_dir }}"/select_best_flavor.py /tmp/ec2_flavor_info_output_{{region}}.json /tmp/{{random_name}}_ec2_request_instances.json t2 > /tmp/{{random_name}}_ec2_selected_flavors_{{region}}.json
+    - shell: python "{{ playbook_dir }}"/select_best_flavor.py /tmp/ec2_flavor_info_output_{{region}}.json /tmp/{{random_name}}_ec2_request_instances.json > /tmp/{{random_name}}_ec2_selected_flavors_{{region}}.json
       register: select_best_flavors_output
 
     - include_vars:
