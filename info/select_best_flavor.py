@@ -14,7 +14,6 @@ def get_shorter_dist(input_available_instances, input_requested_instances):
         requested_vector = np.array([int(requested_instance['mem_size'].split(' ')[0]),
                                      int(requested_instance['num_cores'])])
         for flavor in flavors:
-            print(flavor)
             available_vector = np.array(
                 [int(flavor['MemoryInfo']['SizeInMiB']), int(flavor['VCpuInfo']['DefaultVCpus'])])
             dist = norm(requested_vector - available_vector)
