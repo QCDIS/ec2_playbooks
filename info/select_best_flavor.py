@@ -21,19 +21,19 @@ def get_dist(flavor=None, requested_vector=None, min_dist=None, requested_instan
     return selected_flavors
 
 
-def get_shorter_dist(available_instances, requested_instances, preferred_family=None):
-    flavors = available_instances
+def get_shorter_dist(input_available_instances, input_requested_instances, input_preferred_family=None):
+    flavors = input_available_instances
     selected_flavors = {}
-    for requested_instance_name in requested_instances:
+    for requested_instance_name in input_requested_instances:
         min_dist = sys.maxsize
-        requested_instance = requested_instances[requested_instance_name]
+        requested_instance = input_requested_instances[requested_instance_name]
         requested_vector = np.array([float(requested_instance['mem_size'].split(' ')[0]),
                                      float(requested_instance['num_cores'])])
         for flavor in flavors:
             if not flavor['BareMetal'] and 'ProcessorInfo' in flavor and 'x86_64' in flavor['ProcessorInfo']['SupportedArchitectures']:
-                if preferred_family and preferred_family in flavor['InstanceType']:
+                if input_preferred_family and input_preferred_family in flavor['InstanceType']:
                     selected_flavors.update(get_dist(flavor, requested_vector, min_dist, requested_instance_name))
-                elif not preferred_family:
+                elif not input_preferred_family:
                     selected_flavors.update(get_dist(flavor, requested_vector, min_dist, requested_instance_name))
     return selected_flavors
 
