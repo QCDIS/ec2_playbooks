@@ -5,6 +5,8 @@
     gather_facts: no
   tasks:
 
+    - shell: apt update
+    
     - package:
         name:
         - jq
